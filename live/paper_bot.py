@@ -16,7 +16,7 @@ account = PaperAccount(balance=config.INITIAL_BALANCE)
 def run():
 
     df = fetch_ohlcv(
-        config.SYMBOL,
+        config.SYMBOLS,
         config.TIMEFRAME,
         10
     )
