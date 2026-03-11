@@ -6,7 +6,7 @@ import time
 
 def fetch_ohlcv(symbol, timeframe, days):
 
-    exchange = ccxt.binance()
+    exchange = ccxt.delta()
 
     since = exchange.parse8601(
         (datetime.datetime.utcnow() - datetime.timedelta(days=days)).isoformat()
