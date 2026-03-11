@@ -2,7 +2,6 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import time
 import config
 
 from data.market_data import fetch_ohlcv
@@ -16,55 +15,43 @@ account = PaperAccount(balance=config.INITIAL_BALANCE)
 
 def run():
 
-    while True:
+    df = fetch_ohlcv(
+        config.SYMBOL,
+        config.TIMEFRAME,
+        10
+    )
 
-        try:
+    df = apply_strategy(
+        df,
+        config.ATR_PERIOD,
+        config.MULTIPLIER,
+        config.CHANGE_ATR
+    )
 
-            df = fetch_ohlcv(
-                config.SYMBOL,
-                config.TIMEFRAME,
-                10
-            )
+    last = df.iloc[-1]
 
-            df = apply_strategy(
-                df,
-                config.ATR_PERIOD,
-                config.MULTIPLIER,
-                config.CHANGE_ATR
-            )
+    price = last["close"]
+    signal = last["signal"]
+    atr = last["atr"]
 
-            last = df.iloc[-1]
+    risk = account.balance * 0.01
+    size = risk / (2 * atr)
 
-            price = last["close"]
-            signal = last["signal"]
-            atr = last["atr"]
+    log(f"PRICE: {price} | SIGNAL: {signal}")
 
-            risk = account.balance * 0.01
-            size = risk / (2 * atr)
+    if signal == 1 and account.position <= 0:
 
-            log(f"PRICE: {price} | SIGNAL: {signal}")
+        if account.position == -1:
+            account.close_position(price)
 
-            if signal == 1 and account.position <= 0:
+        account.open_long(price, size)
 
-                if account.position == -1:
-                    account.close_position(price)
+    elif signal == -1 and account.position >= 0:
 
-                account.open_long(price, size)
+        if account.position == 1:
+            account.close_position(price)
 
-            elif signal == -1 and account.position >= 0:
-
-                if account.position == 1:
-                    account.close_position(price)
-
-                account.open_short(price, size)
-
-            time.sleep(60)
-
-        except Exception as e:
-
-            log(f"ERROR: {e}")
-
-            time.sleep(10)
+        account.open_short(price, size)
 
 
 if __name__ == "__main__":
