@@ -1,5 +1,5 @@
 SYMBOLS = [
-    "SOL/USDT"
+    "ETH/USDT"
 ]
 TIMEFRAME = "15m"
 
