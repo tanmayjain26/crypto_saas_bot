@@ -23,7 +23,7 @@ jobs:
         run: python live/paper_bot.py
 
       - name: Wait before next run
-        run: sleep 300
+        run: sleep 600
 
       - name: Trigger next run
         run: |
