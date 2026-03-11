@@ -5,6 +5,4 @@ matplotlib
 requests
 python-dateutil
 pytz
-tqdmgit add requirements.txt
-git commit -m "requirements"
-git push
+tqdm
