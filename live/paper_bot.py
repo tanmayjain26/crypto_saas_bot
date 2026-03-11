@@ -14,12 +14,8 @@ account = PaperAccount(balance=config.INITIAL_BALANCE)
 
 
 def run():
-
-    df = fetch_ohlcv(
-        config.SYMBOLS,
-        config.TIMEFRAME,
-        10
-    )
+    for symbol in config.SYMBOLS:
+        df = fetch_ohlcv(symbol, config.TIMEFRAME, days=10)
 
     df = apply_strategy(
         df,
