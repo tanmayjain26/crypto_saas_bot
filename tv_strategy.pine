@@ -1,0 +1,23 @@
+
+//@version=5
+indicator("Python Strategy Signals", overlay=true)
+
+longBars = array.from(328,402,521,1017,2530,4292,5411,5718,5774,5876)
+shortBars = array.from(997,1046,1772,1942,2150,2266,3160,3951,4050,4425,4526,4638,5046,5107)
+
+isLong = array.includes(longBars, bar_index)
+isShort = array.includes(shortBars, bar_index)
+
+plotshape(isLong,
+     title="Python Long",
+     location=location.belowbar,
+     color=color.green,
+     style=shape.triangleup,
+     size=size.large)
+
+plotshape(isShort,
+     title="Python Short",
+     location=location.abovebar,
+     color=color.red,
+     style=shape.triangledown,
+     size=size.large)

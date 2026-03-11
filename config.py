@@ -1,0 +1,23 @@
+SYMBOLS = [
+    "SOL/USDT"
+]
+TIMEFRAME = "15m"
+
+ATR_PERIOD = 12
+MULTIPLIER = 3
+
+INITIAL_BALANCE = 1000
+POSITION_SIZE = 0.3
+TAKER_FEE = 0.0005
+
+DAYS = 365
+
+# match PineScript input
+CHANGE_ATR = True
+
+# Supertrend breakout filter
+BREAKOUT_ATR_MULT = 1.5
+
+# ADX trend filter
+ADX_PERIOD = 14
+ADX_THRESHOLD = 8
